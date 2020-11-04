@@ -1,2 +1,2 @@
 # medium-post-markdown
-This action is for posting markdown based posts to medium
+Github Action for posting markdown based posts to medium.com

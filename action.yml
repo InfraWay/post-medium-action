@@ -1,0 +1,44 @@
+name: "Medium Markdown Post"
+description: "Pushes markdown post to medium"
+author: "InfraWay"
+
+inputs:
+  app_id:
+    description: "Medium's App ID"
+    required: true
+  app_secret:
+    description: "Medium's App ID"
+    required: true
+  access_token:
+    description: "Medium's Access Token"
+    required: true
+  user_id:
+    description: "Medium's author username"
+    required: true
+  markdown:
+    description: "Post markdown to be published"
+    required: true
+  post_url:
+    description: "Post's URL if it was published elsewhere"
+    required: false
+    default: ""
+  post_status:
+    description: "Post's status. Valid values are 'draft', 'public', or 'unlisted'"
+    required: false
+    default: "draft"
+  post_license:
+    description: "Post's license. Valid values are 'all-rights-reserved', 'cc-40-by', 'cc-40-by-sa', 'cc-40-by-nd', 'cc-40-by-nc', 'cc-40-by-nc-nd', 'cc-40-by-nc-sa', 'cc-40-zero', 'public-domain'"
+    required: false
+    default: "all-rights-reserved"
+
+outputs:
+  id:
+
+runs:
+  using: "node12"
+  main: "index.js"
+
+branding:
+  icon: "cast"
+  color: "yellow"
+
