@@ -4,6 +4,7 @@
   "description": "Github Action for posting markdown based posts to medium.com",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -23,6 +24,8 @@
   },
   "homepage": "https://github.com/InfraWay/medium-post-markdown#readme",
   "dependencies": {
+    "@actions/core": "^1.2.6",
+    "@actions/github": "^4.0.0",
     "medium-sdk": "0.0.4",
     "meta-marked": "^0.4.2"
   }

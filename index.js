@@ -6,7 +6,6 @@ const {
   INPUT_APP_SECRET,
   INPUT_ACCESS_TOKEN,
 
-  INPUT_USER_ID,
   INPUT_MARKDOWN,
   INPUT_POST_URL,
   INPUT_POST_STATUS = sdk.PostPublishStatus.DRAFT,
@@ -16,10 +15,22 @@ const {
 const client = new sdk.MediumClient({ clientId: INPUT_APP_ID, clientSecret: INPUT_APP_SECRET });
 client.setAccessToken(INPUT_ACCESS_TOKEN);
 
-const createPost = async (title, tags, markdown) => {
+const getUser = async () => {
+  return new Promise((resolve, reject) => {
+    client.getUser((err, user) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(user);
+    });
+  });
+};
+
+const createPost = async (userId, title, tags, markdown) => {
   return new Promise((resolve, reject) => {
     client.createPost({
-      userId: INPUT_USER_ID,
+      userId,
       title: title,
       tags: tags,
       canonicalUrl: INPUT_POST_URL,
@@ -39,13 +50,14 @@ const createPost = async (title, tags, markdown) => {
 
 (async () => {
   try {
+    const { id } = await getUser();
     const { meta, markdown } = md(INPUT_MARKDOWN);
     const { title, tags = [] } = meta;
-    const post = await createPost(title, tags, markdown);
+    const post = await createPost(id, title, tags, markdown);
     console.log(`::set-output name=id::${post.id}`);
     process.exit(0);
   } catch (err) {
-    console.log(`::error ::${err.stack}`);
+    console.log(`::error ::${err.message}`);
     process.exit(1);
   }
 })();

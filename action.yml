@@ -12,9 +12,6 @@ inputs:
   access_token:
     description: "Medium's Access Token"
     required: true
-  user_id:
-    description: "Medium's author username"
-    required: true
   markdown:
     description: "Post markdown to be published"
     required: true
