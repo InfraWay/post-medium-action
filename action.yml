@@ -30,6 +30,7 @@ inputs:
 
 outputs:
   id:
+    description: "Post medium ID"
 
 runs:
   using: "node12"
