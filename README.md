@@ -15,13 +15,13 @@ Github Action for posting a markdown post to medium.com
 
 **Required** User's access token. Create one on the [page](https://medium.com/me/settings).
 
-### `markdown`
+### `markdown_file`
 
-**Required** The markdown content of the article.
+**Required** The markdown file path of the article.
 
-### `post_url`
+### `base_url`
 
-Canonical post url if the article was published elsewhere.
+Base blog's url e.g. https://myblog.com
 
 ### `post_status`
 

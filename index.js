@@ -1,3 +1,4 @@
+const fs = require('fs');
 const sdk = require('medium-sdk');
 const md = require('meta-marked');
 
@@ -6,8 +7,8 @@ const {
   INPUT_APP_SECRET,
   INPUT_ACCESS_TOKEN,
 
-  INPUT_MARKDOWN,
-  INPUT_POST_URL,
+  INPUT_MARKDOWN_FILE,
+  INPUT_BASE_URL,
   INPUT_POST_STATUS = sdk.PostPublishStatus.DRAFT,
   INPUT_POST_LICENSE = sdk.PostLicense.ALL_RIGHTS_RESERVED,
 } = process.env;
@@ -27,13 +28,13 @@ const getUser = async () => {
   });
 };
 
-const createPost = async (userId, title, tags, markdown) => {
+const createPost = async (userId, postUrl, title, tags, markdown) => {
   return new Promise((resolve, reject) => {
     client.createPost({
       userId,
       title: title,
       tags: tags,
-      canonicalUrl: INPUT_POST_URL,
+      canonicalUrl: postUrl,
       publishStatus: INPUT_POST_STATUS,
       license: INPUT_POST_LICENSE,
       contentFormat: sdk.PostContentFormat.MARKDOWN,
@@ -48,13 +49,30 @@ const createPost = async (userId, title, tags, markdown) => {
   });
 };
 
+const getFileContents = async (filepath) => {
+  return new Promise((resolve, reject) => {
+    fs.readFile(filepath, 'utf8', (err, data) => {
+      if (err) {
+        return reject(err);
+      }
+      resolve(data);
+    });
+  });
+};
+
+const replaceLocalLinks = (content) => {
+  return content.replace(/\]\((\/[^\)]+)\)/gi, `](${INPUT_BASE_URL}$1)`)
+};
+
 (async () => {
   try {
-    console.dir(INPUT_MARKDOWN);
+    const data = await getFileContents(INPUT_MARKDOWN_FILE);
+    console.dir(data);
     const { id } = await getUser();
-    const { meta, markdown } = md(INPUT_MARKDOWN);
-    const { title, tags = [] } = meta;
-    const post = await createPost(id, title, tags, markdown);
+    const { meta, markdown } = md(replaceLocalLinks(data));
+    const { title, tags = [], slug } = meta;
+    const postUrl = `${INPUT_BASE_URL}/posts/${slug}`;
+    const post = await createPost(id, postUrl, title, tags, markdown);
     console.log(`::set-output name=id::${post.id}`);
     process.exit(0);
   } catch (err) {

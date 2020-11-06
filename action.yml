@@ -12,11 +12,11 @@ inputs:
   access_token:
     description: "Medium's Access Token"
     required: true
-  markdown:
-    description: "Post markdown to be published"
+  markdown_file:
+    description: "Markdown post file"
     required: true
-  post_url:
-    description: "Post's URL if it was published elsewhere"
+  base_url:
+    description: "Base blog's URL"
     required: false
     default: ""
   post_status:
