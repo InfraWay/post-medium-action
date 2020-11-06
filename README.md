@@ -38,7 +38,23 @@ Post's license. Valid values are `all-rights-reserved`, `cc-40-by`, `cc-40-by-sa
 ID of the created post.
 
 ## Example usage
+Let's assume the post markdown file is located at `./content/post.md`.
 
-uses: actions/hello-world-javascript-action@v1.1
-with:
-  who-to-greet: 'Mona the Octocat'
+```yaml
+name: publish-to-medium
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Read the post
+        id: post
+        run: echo "::set-output name=data::$(cat ./content/post.md)"
+      - uses: infraway/medium-post-markdown@v1
+        with:
+          app_id: ${{ secrets.MEDIUM_APP_ID }}
+          app_secret: ${{ secrets.MEDIUM_APP_SECRET }}
+          access_token: ${{ secrets.MEDIUM_ACCESS_TOKEN }}
+          markdown: ${{ steps.post.outputs.data }}
+```
