@@ -50,6 +50,7 @@ const createPost = async (userId, title, tags, markdown) => {
 
 (async () => {
   try {
+    console.dir(INPUT_MARKDOWN);
     const { id } = await getUser();
     const { meta, markdown } = md(INPUT_MARKDOWN);
     const { title, tags = [] } = meta;
