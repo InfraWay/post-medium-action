@@ -70,7 +70,7 @@ const replaceLocalLinks = (content) => {
     console.dir(data);
     const { id } = await getUser();
     const { meta, markdown } = md(replaceLocalLinks(data));
-    const { title, tags = [], slug } = meta;
+    const { title, tags = [], slug } = meta || {};
     const postUrl = `${INPUT_BASE_URL}/posts/${slug}`;
     const post = await createPost(id, postUrl, title, tags, markdown);
     console.log(`::set-output name=id::${post.id}`);
