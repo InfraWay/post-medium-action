@@ -1,5 +1,5 @@
 {
-  "name": "medium-post-markdown",
+  "name": "post-medium-action",
   "version": "1.0.0",
   "description": "Github Action for posting markdown based posts to medium.com",
   "main": "index.js",
@@ -15,7 +15,8 @@
     "github",
     "actions",
     "medium",
-    "markdown"
+    "markdown",
+    "blog"
   ],
   "author": "Andrew Red <iam@andrew.red>",
   "license": "MIT",
