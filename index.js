@@ -67,7 +67,6 @@ const replaceLocalLinks = (content) => {
 (async () => {
   try {
     const data = await getFileContents(INPUT_MARKDOWN_FILE);
-    console.dir(data);
     const { id } = await getUser();
     const { meta, markdown } = md(replaceLocalLinks(data));
     const { title, tags = [], slug } = meta || {};
