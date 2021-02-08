@@ -37,6 +37,10 @@ Post's license. Valid values are `all-rights-reserved`, `cc-40-by`, `cc-40-by-sa
 
 ID of the created post.
 
+### `url`
+
+Medium URL of the created post.
+
 ## Example usage
 Let's assume the post markdown file is located at `./content/post.md`.
 

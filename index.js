@@ -73,6 +73,7 @@ const replaceLocalLinks = (content) => {
     const postUrl = `${INPUT_BASE_URL}/posts/${slug}`;
     const post = await createPost(id, postUrl, title, tags, markdown);
     console.log(`::set-output name=id::${post.id}`);
+    console.log(`::set-output name=url::${post.url}`);
     process.exit(0);
   } catch (err) {
     console.log(`::error ::${err.message}`);
