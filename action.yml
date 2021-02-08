@@ -32,6 +32,9 @@ outputs:
   id:
     description: "Post medium ID"
 
+  url:
+    description: "Post medium URL"
+
 runs:
   using: "node12"
   main: "index.js"
