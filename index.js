@@ -9,6 +9,7 @@ const {
 
   INPUT_MARKDOWN_FILE,
   INPUT_BASE_URL,
+  INPUT_POST_URL,
   INPUT_POST_STATUS = sdk.PostPublishStatus.DRAFT,
   INPUT_POST_LICENSE = sdk.PostLicense.ALL_RIGHTS_RESERVED,
 } = process.env;
@@ -61,6 +62,9 @@ const getFileContents = async (filepath) => {
 };
 
 const replaceLocalLinks = (content) => {
+  if (!INPUT_BASE_URL) {
+    return content;
+  }
   return content.replace(/\]\((\/[^\)]+)\)/gi, `](${INPUT_BASE_URL}$1)`)
 };
 
@@ -70,7 +74,8 @@ const replaceLocalLinks = (content) => {
     const { id } = await getUser();
     const { meta, markdown } = md(replaceLocalLinks(data));
     const { title, tags = [], slug } = meta || {};
-    const postUrl = `${INPUT_BASE_URL}/posts/${slug}`;
+    const postBaseUrl = INPUT_POST_URL || INPUT_BASE_URL || '';
+    const postUrl = [postBaseUrl.replace(/\/+$/, ''), slug].join('/');
     const post = await createPost(id, postUrl, title, tags, markdown);
     console.log(`::set-output name=id::${post.id}`);
     console.log(`::set-output name=url::${post.url}`);

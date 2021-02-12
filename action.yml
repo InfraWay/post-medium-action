@@ -16,7 +16,11 @@ inputs:
     description: "Markdown post file"
     required: true
   base_url:
-    description: "Base blog's URL"
+    description: "Base blog's URL. Example: https://myblog"
+    required: false
+    default: ""
+  post_url:
+    description: "Base blog's post URL. Example: https://myblog/posts"
     required: false
     default: ""
   post_status:
