@@ -53,7 +53,7 @@ jobs:
       - name: Read the post
         id: post
         run: echo "::set-output name=data::$(cat ./content/post.md)"
-      - uses: infraway/medium-post-markdown@v1.4.0
+      - uses: infraway/medium-post-markdown@v1.5.0
         with:
           access_token: ${{ secrets.MEDIUM_ACCESS_TOKEN }}
           markdown: ${{ steps.post.outputs.data }}
@@ -92,7 +92,7 @@ jobs:
           done
       - if: steps.posts.outputs.post0
         name: Publish to medium
-        uses: infraway/post-medium-action@v1.4.0
+        uses: infraway/post-medium-action@v1.5.0
         with:
           access_token: ${{ secrets.MEDIUM_ACCESS_TOKEN }}
           markdown_file: ${{ steps.posts.outputs.post0 }}
