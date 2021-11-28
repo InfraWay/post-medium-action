@@ -1,10 +1,8 @@
 const fs = require('fs');
-const sdk = require('medium-sdk');
+const sdk = require('@redcode/medium-sdk');
 const md = require('meta-marked');
 
 const {
-  INPUT_APP_ID,
-  INPUT_APP_SECRET,
   INPUT_ACCESS_TOKEN,
 
   INPUT_MARKDOWN_FILE,
@@ -14,7 +12,7 @@ const {
   INPUT_POST_LICENSE = sdk.PostLicense.ALL_RIGHTS_RESERVED,
 } = process.env;
 
-const client = new sdk.MediumClient({ clientId: INPUT_APP_ID, clientSecret: INPUT_APP_SECRET });
+const client = new sdk.MediumClient();
 client.setAccessToken(INPUT_ACCESS_TOKEN);
 
 const getUser = async () => {
@@ -75,7 +73,7 @@ const replaceLocalLinks = (content) => {
     const { meta, markdown } = md(replaceLocalLinks(data));
     const { title, tags = [], slug } = meta || {};
     const postBaseUrl = INPUT_POST_URL || INPUT_BASE_URL || '';
-    const postUrl = [postBaseUrl.replace(/\/+$/, ''), slug].join('/');
+    const postUrl = postBaseUrl ? [postBaseUrl.replace(/\/+$/, ''), slug].join('/') : undefined;
     const post = await createPost(id, postUrl, title, tags, markdown);
     console.log(`::set-output name=id::${post.id}`);
     console.log(`::set-output name=url::${post.url}`);

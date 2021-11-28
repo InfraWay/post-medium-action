@@ -3,14 +3,6 @@ Github Action for posting a markdown post to medium.com
 
 ## Inputs
 
-### `app_id`
-
-**Required** Application id. Create one on the [page](https://medium.com/me/applications).
-
-### `app_secret`
-
-**Required** Application secret.
-
 ### `access_token`
 
 **Required** User's access token. Create one on the [page](https://medium.com/me/settings).
@@ -61,10 +53,8 @@ jobs:
       - name: Read the post
         id: post
         run: echo "::set-output name=data::$(cat ./content/post.md)"
-      - uses: infraway/medium-post-markdown@v1.3.0
+      - uses: infraway/medium-post-markdown@v1.4.0
         with:
-          app_id: ${{ secrets.MEDIUM_APP_ID }}
-          app_secret: ${{ secrets.MEDIUM_APP_SECRET }}
           access_token: ${{ secrets.MEDIUM_ACCESS_TOKEN }}
           markdown: ${{ steps.post.outputs.data }}
 ```
@@ -102,10 +92,8 @@ jobs:
           done
       - if: steps.posts.outputs.post0
         name: Publish to medium
-        uses: infraway/post-medium-action@v1.3.0
+        uses: infraway/post-medium-action@v1.4.0
         with:
-          app_id: ${{ secrets.MEDIUM_APP_ID }}
-          app_secret: ${{ secrets.MEDIUM_APP_SECRET }}
           access_token: ${{ secrets.MEDIUM_ACCESS_TOKEN }}
           markdown_file: ${{ steps.posts.outputs.post0 }}
           base_url: https://myblog.com
