@@ -92,7 +92,7 @@ jobs:
           done
       - if: steps.posts.outputs.post0
         name: Publish to medium
-        uses: infraway/post-medium-action@v1.5.0
+        uses: infraway/post-medium-action@v1.6.0
         with:
           access_token: ${{ secrets.MEDIUM_ACCESS_TOKEN }}
           markdown_file: ${{ steps.posts.outputs.post0 }}
