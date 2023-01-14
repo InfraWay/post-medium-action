@@ -50,13 +50,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Read the post
-        id: post
-        run: echo "::set-output name=data::$(cat ./content/post.md)"
       - uses: infraway/medium-post-markdown@v1.5.0
         with:
           access_token: ${{ secrets.MEDIUM_ACCESS_TOKEN }}
-          markdown: ${{ steps.post.outputs.data }}
+          markdown_file: ./content/post.md
 ```
 
 ### Post content from newly committed file
